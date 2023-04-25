@@ -1,6 +1,9 @@
 package compiladores;
 
 import java.io.BufferedReader;
+import Token.java;
+import Classe.java;
+import Valor.java;
 
 
 public class Lexico {
@@ -12,8 +15,7 @@ public class Lexico {
 
 
     public Lexico(String nomeArquivo) {
-        
- 
+        private String EOF; //fim de linha
     }
  
     public Token getToken() {
@@ -125,18 +127,7 @@ public class Lexico {
                   token.setColuna(this.coluna - lexema.length());
                   return token;
                 } 
-                
-                else if(Character.compare(this.c, '-') == 0) {
-                  lexema.append(this.c);
-                  this.c = (char) br.read();
-                  this.coluna++;
-                  Token token = new Token();
-                  token.setClasse(Classe.cSub);
-                  token.setLinha(this.linha);
-                  token.setColuna(this.coluna - lexema.length());
-                  return token;
-                } 
-                
+
                 else if(Character.compare(this.c, '*') == 0) {
                   lexema.append(this.c);
                   this.c = (char) br.read();
@@ -148,7 +139,18 @@ public class Lexico {
                   return token;
                 } 
                 
-                else if(Character.compare(this.c, '/') == 0) {
+                else if(Character.compare(this.c, '-') == 0) {
+                  lexema.append(this.c);
+                  this.c = (char) br.read();
+                  this.coluna++;
+                  Token token = new Token();
+                  token.setClasse(Classe.cSub);
+                  token.setLinha(this.linha);
+                  token.setColuna(this.coluna - lexema.length());
+                  return token;
+                } 
+
+                 else if(Character.compare(this.c, '/') == 0) {
                   lexema.append(this.c);
                   this.c = (char) br.read();
                   this.coluna++;
@@ -158,7 +160,7 @@ public class Lexico {
                   token.setColuna(this.coluna - lexema.length());
                   return token;
                 }
-        
+
                 else if(Character.compare(this.c, ':') == 0) {
                   lexema.append(this.c);
                   this.c = (char) br.read();
@@ -279,9 +281,10 @@ public class Lexico {
                 }
               }
  
-        } catch (IOException e) {
-            System.err.println("Não foi possível abrir o arquivo ou ler do arquivo: " + nomeArquivo);
-            e.printStackTrace();
+        } 
+
+        catch (IOException e) {
+            System.err.println("Error in open  " + nomeArquivo);
         }
     }
  
